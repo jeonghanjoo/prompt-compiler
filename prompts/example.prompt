@@ -1,0 +1,15 @@
+# Example prompt file
+name: Example
+description: A simple example prompt
+template: |
+  def hello_world():
+      print("Hello, World!")
+
+tests:
+  - name: test_hello_world
+    description: Test hello world function
+    code: |
+      def test_hello_world(capsys):
+          hello_world()
+          captured = capsys.readouterr()
+          assert captured.out == "Hello, World!\n" 
