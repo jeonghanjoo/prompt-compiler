@@ -1,0 +1,29 @@
+# Example prompt file for calculating sum of numbers
+name: SumNumbers
+description: Calculate the sum of integers from 1 to 100
+
+template: |
+  def calculate_sum() -> int:
+      """
+      Calculate the sum of integers from 1 to 100.
+      
+      Returns:
+          int: The sum of numbers from 1 to 100
+      """
+      # TODO: Implement
+      pass
+
+requirements:
+  - Calculate sum of integers from 1 to 100 (inclusive)
+  - Use efficient calculation method
+  - Return the result as integer
+  - Handle potential overflow cases
+  - Include proper type hints
+  - Add comprehensive docstring
+
+test_cases:
+  - Input: None
+    Output: 5050  # (100 * 101) / 2
+  - Description: "Verify the result matches Gauss's formula"
+
+language: python 

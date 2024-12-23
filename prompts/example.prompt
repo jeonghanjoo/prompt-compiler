@@ -1,15 +1,13 @@
-# Example prompt file
+# Example prompt file showing the basic structure
 name: Example
-description: A simple example prompt
+description: A simple example function
 template: |
   def hello_world():
-      print("Hello, World!")
+      # TODO: Implement
+      pass
 
-tests:
-  - name: test_hello_world
-    description: Test hello world function
-    code: |
-      def test_hello_world(capsys):
-          hello_world()
-          captured = capsys.readouterr()
-          assert captured.out == "Hello, World!\n" 
+requirements:
+  - Print "Hello, World!"
+  - Return None
+
+language: python
