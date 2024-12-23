@@ -1,46 +1,47 @@
 # Prompt Compiler
 
-프롬프트 파일을 기반으로 코드를 생성하는 도구입니다. AI 모델(GPT, Claude 등)을 활용하여 프롬프트로부터 코드와 테스트를 자동으로 생성합니다.
+A tool for generating code from prompt files using AI models (GPT, Claude, etc.). It automatically generates both source code and test code based on the given prompts.
 
-## 주요 기능
+## Features
 
-- 프롬프트 기반 코드 생성
-- 자동 테스트 코드 생성
-- 다양한 AI 모델 지원 (GPT, Claude)
-- 응답 캐싱 시스템
-- 코드 포맷팅 및 검증
-- 레이트 리미팅 처리
-- CLI 인터페이스
+- Prompt-based code generation
+- Automatic test code generation
+- Multiple AI model support (GPT, Claude)
+- Response caching system
+- Code formatting and validation
+- Rate limiting handling
+- CLI interface
 
-## 설치
+## Installation
 
 ```bash
 poetry install
 ```
 
-## CLI 사용법
+## CLI Usage
 
-### 기본 사용법
+### Basic Usage
 
 ```bash
-# 단일 파일 컴파일
+# Compile single file
 prompt-compiler input.prompt
 
-# 여러 파일 컴파일
+# Compile multiple files
 prompt-compiler input1.prompt input2.prompt
 
-# 출력 디렉토리 지정
+# Specify output directory
 prompt-compiler input.prompt -o generated/
 ```
 
-### 설정 파일
+### Configuration File
 
-`prompt-compiler.yaml` 파일을 사용하여 기본 설정을 지정할 수 있습니다:
+Use `prompt-compiler.yaml` to specify default settings:
 
 ```yaml
 # AI Model Configuration
 api_key: "your-api-key-here"
 model: "gpt"  # or "claude"
+model_name: "gpt-4"  # or "gpt-3.5-turbo", "claude-3-opus-20240229", etc.
 
 # Output Configuration
 output_dir: "generated"
@@ -50,35 +51,35 @@ format: "split"  # or "single"
 cache_dir: ".cache"
 ```
 
-### CLI 옵션
+### CLI Options
 
 ```bash
-# 설정 파일 지정
+# Specify config file
 prompt-compiler input.prompt -c my-config.yaml
 
-# API 키 직접 지정
+# Directly specify API key
 prompt-compiler input.prompt --api-key="your-key-here"
 
-# AI 모델 선택
+# Select AI model
 prompt-compiler input.prompt --model=claude
 
-# 특정 모델 버전 지정
+# Specify model version
 prompt-compiler input.prompt --model=gpt --model-name=gpt-4
 prompt-compiler input.prompt --model=claude --model-name=claude-3-sonnet-20240229
 
-# 캐시 무시하고 강제 재생성
+# Force rebuild, ignore cache
 prompt-compiler input.prompt --force
 
-# 캐시 디렉토리 지정
+# Specify cache directory
 prompt-compiler input.prompt --cache-dir=.my-cache
 
-# 출력 형식 지정 (단일/분할 파일)
+# Specify output format (single/split)
 prompt-compiler input.prompt --format=single
 ```
 
-## 프롬프트 파일 작성
+## Writing Prompt Files
 
-`prompts` 디렉토리에 `.prompt` 파일을 작성합니다:
+Create a `.prompt` file in the `prompts` directory:
 
 ```yaml
 name: Example
@@ -95,53 +96,53 @@ requirements:
 language: python
 ```
 
-## 프로그래밍 방식 사용
+## Programmatic Usage
 
 ```python
 from pathlib import Path
 from prompt_compiler.compiler import Compiler
 from prompt_compiler.ai_adapters import GptAdapter
 
-# AI 어댑터 초기화
+# Initialize AI adapter
 adapter = GptAdapter(api_key="your-api-key")
 
-# 컴파일러 초기화
+# Initialize compiler
 compiler = Compiler(adapter)
 
-# 프롬프트로부터 코드 생성
+# Generate code from prompt
 result = compiler.compile(Path("prompts/example.prompt"))
 
-# 생성된 코드와 테스트 출력
+# Print generated code and tests
 print("Generated Code:")
 print(result["code"])
 print("\nGenerated Tests:")
 print(result["tests"])
 ```
 
-## 고급 기능
+## Advanced Features
 
-### 캐싱 사용
+### Using Cache
 
 ```python
 compiler = Compiler(adapter, cache_dir=Path(".cache"))
-result = compiler.compile(prompt_file, force_rebuild=False)  # 캐시 사용
+result = compiler.compile(prompt_file, force_rebuild=False)  # Use cache
 ```
 
-### 커스텀 포맷터 사용
+### Custom Formatter
 
 ```python
 from prompt_compiler.formatters import CodeFormatter, ResponseProcessor
 
 class CustomFormatter(CodeFormatter):
     def format(self, code: str) -> str:
-        # 커스텀 포맷팅 로직
+        # Custom formatting logic
         return code
 
 formatter = ResponseProcessor(CustomFormatter())
 compiler = Compiler(adapter, formatter=formatter)
 ```
 
-### 커스텀 템플릿 사용
+### Custom Template
 
 ```python
 from prompt_compiler.templates import BaseTemplate
@@ -156,7 +157,7 @@ class CustomTemplate(BaseTemplate):
 compiler = Compiler(adapter, template=CustomTemplate())
 ```
 
-## 에러 처리
+## Error Handling
 
 ```python
 from prompt_compiler.exceptions import (
@@ -176,14 +177,14 @@ except AIAdapterError as e:
     print(f"AI model error: {e}")
 ```
 
-## 개발
+## Development
 
-- 테스트 실행: `poetry run pytest`
-- 코드 포맷팅: `poetry run black .`
-- 임포트 정렬: `poetry run isort .`
-- 타입 체크: `poetry run mypy .`
+- Run tests: `poetry run pytest`
+- Format code: `poetry run black .`
+- Sort imports: `poetry run isort .`
+- Type check: `poetry run mypy .`
 
-## 라이선스
+## License
 
 MIT License
 
